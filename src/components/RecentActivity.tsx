@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { createPublicClient, http, parseAbiItem } from "viem";
-import { botchainTestnet } from "@/lib/chain";
+import { botchain } from "@/lib/chain";
 import { CLEAN_CHECK_ADDRESS, CLEANING_TASKS } from "@/lib/contract";
 import { History, Clock, CheckCircle2, RefreshCw } from "lucide-react";
 
@@ -36,9 +36,9 @@ export function RecentActivity({ refreshTrigger }: { refreshTrigger?: number }) 
 
     try {
       const client = createPublicClient({
-        chain: botchainTestnet,
+        chain: botchain,
         transport: http(
-          process.env.NEXT_PUBLIC_BOTCHAIN_RPC_URL || "https://rpc.bohr.life"
+          process.env.NEXT_PUBLIC_BOTCHAIN_RPC_URL || "https://rpc.botchain.ai"
         ),
       });
 
@@ -108,7 +108,7 @@ export function RecentActivity({ refreshTrigger }: { refreshTrigger?: number }) 
         </div>
       ) : loading && activities.length === 0 ? (
         <div className="text-center py-6 text-xs text-mutedText">
-          Scanning recent blocks on Botchain Testnet...
+          Scanning recent blocks on Botchain Mainnet...
         </div>
       ) : activities.length > 0 ? (
         <div className="divide-y divide-border/60">
@@ -145,7 +145,7 @@ export function RecentActivity({ refreshTrigger }: { refreshTrigger?: number }) 
 
                 {item.txHash && (
                   <a
-                    href={`https://scan.bohr.life/tx/${item.txHash}`}
+                    href={`https://scan.botchain.ai/tx/${item.txHash}`}
                     target="_blank"
                     rel="noreferrer"
                     className="text-accent hover:underline font-mono"
@@ -160,7 +160,7 @@ export function RecentActivity({ refreshTrigger }: { refreshTrigger?: number }) 
       ) : (
         <div className="text-center py-6 text-xs text-mutedText border border-dashed border-border/60 rounded-xl">
           {rpcLimited
-            ? "RPC event indexing is limited on this public testnet endpoint. Completed tasks will reflect live in your counters and task cards."
+            ? "RPC event indexing is limited on this public endpoint. Completed tasks will reflect live in your counters and task cards."
             : "No task completions found in recent blocks. Mark a task above to record the first entry!"}
         </div>
       )}

@@ -9,7 +9,7 @@
     "lint": "next lint",
     "compile": "hardhat compile",
     "test": "hardhat test",
-    "deploy:testnet": "hardhat run scripts/deploy.ts --network botchain"
+    "deploy:mainnet": "node scripts/deploy.ts"
   },
   "dependencies": {
     "@reown/appkit": "^1.6.4",

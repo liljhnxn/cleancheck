@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useAccount, useConnect, useDisconnect, useChainId } from "wagmi";
-import { botchainTestnet } from "@/lib/chain";
+import { botchain } from "@/lib/chain";
 import {
   Wallet,
   LogOut,
@@ -28,7 +28,7 @@ export function WalletButton() {
     }
   }, []);
 
-  const isCorrectChain = chainId === botchainTestnet.id;
+  const isCorrectChain = chainId === botchain.id;
 
   const shortenAddress = (addr: string) => {
     return `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}`;
@@ -143,7 +143,7 @@ export function WalletButton() {
                 Connect a Wallet
               </h3>
               <p className="text-xs text-mutedText mb-4">
-                Choose a wallet to connect to CleanCheck on Botchain Testnet
+                Choose a wallet to connect to CleanCheck on Botchain Mainnet
               </p>
 
               {errorMessage && (
@@ -235,7 +235,7 @@ export function WalletButton() {
                   }`}
                 />
                 <p className="text-xs font-medium text-mainText">
-                  {isCorrectChain ? "Botchain Testnet" : "Unsupported Network"}
+                  {isCorrectChain ? "Botchain Mainnet" : "Unsupported Network"}
                 </p>
               </div>
             </div>

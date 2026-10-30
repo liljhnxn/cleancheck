@@ -13,7 +13,7 @@ import {
   CLEAN_CHECK_ABI,
   TaskDefinition,
 } from "@/lib/contract";
-import { botchainTestnet } from "@/lib/chain";
+import { botchain } from "@/lib/chain";
 import {
   Armchair,
   Briefcase,
@@ -32,7 +32,7 @@ interface TaskCardProps {
 export function TaskCard({ task, onRefreshAll }: TaskCardProps) {
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
-  const isCorrectChain = chainId === botchainTestnet.id;
+  const isCorrectChain = chainId === botchain.id;
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successTxHash, setSuccessTxHash] = useState<string | null>(null);
@@ -138,7 +138,7 @@ export function TaskCard({ task, onRefreshAll }: TaskCardProps) {
 
     if (!isCorrectChain) {
       setErrorMessage(
-        `Please switch your wallet to Botchain Testnet (Chain ID ${botchainTestnet.id}).`
+        `Please switch your wallet to Botchain Mainnet (Chain ID ${botchain.id}).`
       );
       return;
     }
@@ -237,7 +237,7 @@ export function TaskCard({ task, onRefreshAll }: TaskCardProps) {
             <div className="flex-1">
               <p className="font-medium">Recorded on-chain successfully!</p>
               <a
-                href={`https://scan.bohr.life/tx/${successTxHash}`}
+                href={`https://scan.botchain.ai/tx/${successTxHash}`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1 underline mt-0.5 text-mainText hover:text-accent"

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
-import { botchainTestnet } from "@/lib/chain";
+import { botchain } from "@/lib/chain";
 import { AlertTriangle, ArrowRightLeft, Loader2 } from "lucide-react";
 
 export function NetworkAlert() {
@@ -12,7 +12,7 @@ export function NetworkAlert() {
   const [isManualPending, setIsManualPending] = useState(false);
   const [switchError, setSwitchError] = useState<string | null>(null);
 
-  if (!isConnected || chainId === botchainTestnet.id) {
+  if (!isConnected || chainId === botchain.id) {
     return null;
   }
 
@@ -28,7 +28,7 @@ export function NetworkAlert() {
         try {
           await provider.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: `0x${botchainTestnet.id.toString(16)}` }],
+            params: [{ chainId: `0x${botchain.id.toString(16)}` }],
           });
         } catch (switchErr: any) {
           // If error 4902, the chain needs to be added
@@ -42,13 +42,13 @@ export function NetworkAlert() {
               method: "wallet_addEthereumChain",
               params: [
                 {
-                  chainId: `0x${botchainTestnet.id.toString(16)}`,
-                  chainName: botchainTestnet.name,
-                  nativeCurrency: botchainTestnet.nativeCurrency,
+                  chainId: `0x${botchain.id.toString(16)}`,
+                  chainName: botchain.name,
+                  nativeCurrency: botchain.nativeCurrency,
                   rpcUrls: [
-                    process.env.NEXT_PUBLIC_BOTCHAIN_RPC_URL || "https://rpc.bohr.life",
+                    process.env.NEXT_PUBLIC_BOTCHAIN_RPC_URL || "https://rpc.botchain.ai",
                   ],
-                  blockExplorerUrls: ["https://scan.bohr.life"],
+                  blockExplorerUrls: ["https://scan.botchain.ai"],
                 },
               ],
             });
@@ -57,7 +57,7 @@ export function NetworkAlert() {
           }
         }
       } else if (switchChain) {
-        switchChain({ chainId: botchainTestnet.id });
+        switchChain({ chainId: botchain.id });
       }
     } catch (err: any) {
       console.error("Network switch error:", err);
@@ -76,7 +76,7 @@ export function NetworkAlert() {
             Wrong Network Detected
           </p>
           <p className="text-xs text-mutedText">
-            Please switch to Botchain Testnet (Chain ID: {botchainTestnet.id}) to record cleanliness tasks.
+            Please switch to Botchain Mainnet (Chain ID: {botchain.id}) to record cleanliness tasks.
           </p>
           {switchError && (
             <p className="text-xs text-error mt-1">{switchError}</p>
@@ -93,7 +93,7 @@ export function NetworkAlert() {
         ) : (
           <ArrowRightLeft className="w-3.5 h-3.5" />
         )}
-        {isPending ? "Switching..." : "Switch to Botchain Testnet"}
+        {isPending ? "Switching..." : "Switch to Botchain Mainnet"}
       </button>
     </div>
   );

@@ -1,7 +1,14 @@
 const fs = require("fs");
+require("dotenv").config({ path: ".env.local" });
+require("dotenv").config();
 
 async function check() {
-  const addr = "0x4766e84507B7119a12870f536eB1D0BE95a977F6";
+  const addr = process.argv[2] || process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+  if (!addr) {
+    throw new Error("No contract address provided or found in NEXT_PUBLIC_CONTRACT_ADDRESS");
+  }
+
+  console.log(`Verifying contract at ${addr} on scan.botchain.ai...`);
   const sourceCode = fs.readFileSync("contracts/CleanCheck.sol", "utf8");
 
   for (const evm of ["paris", "default", "shanghai"]) {
@@ -17,7 +24,7 @@ async function check() {
     };
 
     const res = await fetch(
-      `https://scan.bohr.life/api/v2/smart-contracts/${addr}/verification/via/flattened-code`,
+      `https://scan.botchain.ai/api/v2/smart-contracts/${addr}/verification/via/flattened-code`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,10 +36,10 @@ async function check() {
     const text = await res.text();
     console.log(`Body: ${text}`);
 
-    console.log("Waiting 10s...");
+    console.log("Waiting 10s for verification to process...");
     await new Promise(r => setTimeout(r, 10000));
 
-    const checkRes = await fetch(`https://scan.bohr.life/api/v2/smart-contracts/${addr}`);
+    const checkRes = await fetch(`https://scan.botchain.ai/api/v2/smart-contracts/${addr}`);
     const checkData = await checkRes.json();
     console.log("Check:", {
       verified: checkData.is_verified,
@@ -41,7 +48,7 @@ async function check() {
     });
 
     if (checkData.is_verified) {
-      console.log("SUCCESSFULLY VERIFIED ON SCAN.BOHR.LIFE!");
+      console.log("SUCCESSFULLY VERIFIED ON SCAN.BOTCHAIN.AI!");
       break;
     }
   }

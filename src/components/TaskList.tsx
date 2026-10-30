@@ -15,7 +15,7 @@ export function TaskList({ onRefreshAll }: TaskListProps) {
         <div>
           <h2 className="text-lg font-bold text-mainText">Daily Cleaning Tasks</h2>
           <p className="text-xs text-mutedText">
-            Select a task to record cleaning progress directly on Botchain Testnet
+            Select a task to record cleaning progress directly on Botchain Mainnet
           </p>
         </div>
       </div>

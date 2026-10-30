@@ -5,7 +5,7 @@ import { Providers } from "@/lib/providers";
 export const metadata: Metadata = {
   title: "CleanCheck — Simple Web3 Cleanliness Tracker",
   description:
-    "A simple blockchain-based cleanliness checklist for hospitals, clinics, schools, and offices on Botchain Testnet.",
+    "A simple blockchain-based cleanliness checklist for hospitals, clinics, schools, and offices on Botchain Mainnet.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",

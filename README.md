@@ -2,7 +2,7 @@
 
 CleanCheck is a simple, lightweight blockchain-based cleanliness checklist designed for facilities such as hospitals, clinics, schools, and offices.
 
-Connected users can record when designated cleaning tasks have been completed. Each completion is permanently recorded on **Botchain Testnet**, and the dashboard displays live, transparent completion counters and status directly from the smart contract.
+Connected users can record when designated cleaning tasks have been completed. Each completion is permanently recorded on **Botchain Mainnet**, and the dashboard displays live, transparent completion counters and status directly from the smart contract.
 
 > **Portfolio Disclaimer:** CleanCheck is a portfolio demonstration dApp. Records are submitted by users on-chain and do not independently verify or prove that cleaning physically took place.
 
@@ -17,7 +17,7 @@ Connected users can record when designated cleaning tasks have been completed. E
 - **UTC Day Tracking:** Each wallet address can complete each task at most once per UTC day, preventing duplicate submissions on the same day while allowing repeated completions on subsequent days.
 - **On-Chain Counters:** Live total completions and per-task completion counters are queried directly from the smart contract via `wagmi` and `viem`.
 - **Wallet Connection:** Seamless Web3 wallet connectivity (MetaMask, Rabby, Coinbase Wallet, Browser Injected, or WalletConnect).
-- **Network Awareness:** Automatically detects Botchain Testnet (Chain ID `968`) and alerts the user to switch networks if needed.
+- **Network Awareness:** Automatically detects Botchain Mainnet (Chain ID `677`) and alerts the user to switch networks if needed.
 - **Recent On-Chain Activity:** Queries `TaskCompleted` events directly from the blockchain to display recent verifiable submissions.
 
 ---
@@ -28,20 +28,21 @@ Connected users can record when designated cleaning tasks have been completed. E
 - **Styling:** Tailwind CSS (Custom dark aesthetic: `#15171C` background, `#20232B` cards, `#45C4B0` teal accent)
 - **Web3 Integration:** `wagmi`, `viem`, `@tanstack/react-query`, `@reown/appkit`
 - **Smart Contract & Tooling:** Solidity `^0.8.20`, Hardhat, Chai, TypeScript
-- **Target Network:** Botchain Testnet (Chain ID: `968`, Currency: `BOT`)
+- **Target Network:** Botchain Mainnet (Chain ID: `677`, Currency: `BOT`)
 
 ---
 
-## 3. Network Configuration (Botchain Testnet)
+## 3. Network Configuration (Botchain Mainnet)
 
 | Parameter | Value |
 |---|---|
-| **Network Name** | Botchain Testnet |
-| **Chain ID** | `968` |
-| **RPC URL** | `https://rpc.bohr.life` |
+| **Network Name** | Botchain Mainnet |
+| **Chain ID** | `677` |
+| **RPC URL** | `https://rpc.botchain.ai` |
 | **Currency Symbol** | `BOT` |
 | **Currency Decimals** | `18` |
-| **Block Explorer** | [https://scan.bohr.life](https://scan.bohr.life) |
+| **Total Supply** | `150,000,000 BOT` |
+| **Block Explorer** | [https://scan.botchain.ai](https://scan.botchain.ai) |
 
 ---
 
@@ -50,7 +51,7 @@ Connected users can record when designated cleaning tasks have been completed. E
 - [Node.js](https://nodejs.org/) v18+ (tested on Node v25)
 - npm or yarn
 - A Web3 wallet browser extension (e.g., MetaMask, Rabby)
-- Testnet `BOT` tokens for the deployer wallet (for gas fees)
+- `BOT` tokens for the deployer wallet (for gas fees)
 
 ---
 
@@ -75,12 +76,12 @@ cp .env.example .env.local
 Edit `.env.local`:
 
 ```env
-# Botchain Testnet RPC
-BOTCHAIN_RPC_URL=https://rpc.bohr.life
-NEXT_PUBLIC_BOTCHAIN_RPC_URL=https://rpc.bohr.life
+# Botchain Mainnet RPC
+BOTCHAIN_RPC_URL=https://rpc.botchain.ai
+NEXT_PUBLIC_BOTCHAIN_RPC_URL=https://rpc.botchain.ai
 
 # Deployed Smart Contract Address (add after deployment)
-NEXT_PUBLIC_CONTRACT_ADDRESS=
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x3ECA8573925E2d5d6DF0458EDC09c29d7f6f3D55
 
 # Private key of the deployer wallet (REQUIRED only for deploying the contract)
 PRIVATE_KEY=your_private_key_here
@@ -111,19 +112,20 @@ npm run test
 
 ---
 
-## 7. Deploying to Botchain Testnet
+## 7. Deploying to Botchain Mainnet
 
-Ensure you have set `PRIVATE_KEY` in `.env.local` with some testnet `BOT` balance:
+Ensure you have set `PRIVATE_KEY` in `.env.local` with some `BOT` balance:
 
 ```bash
-npm run deploy:testnet
+npm run deploy:mainnet
 ```
 
 The script will:
-1. Verify the deployer account balance on Botchain Testnet.
-2. Deploy the `CleanCheck` contract.
-3. Print the deployed contract address and transaction hash with an explorer link.
-4. Provide instructions to set `NEXT_PUBLIC_CONTRACT_ADDRESS` in `.env.local`.
+1. Verify the deployer account balance on Botchain Mainnet.
+2. Estimate the minimal required gas units and set an optimal gas price (20 gwei).
+3. Deploy the `CleanCheck` contract.
+4. Print the deployed contract address and transaction hash with an explorer link.
+5. Automatically update `NEXT_PUBLIC_CONTRACT_ADDRESS` in `.env.local`.
 
 ---
 
@@ -138,7 +140,7 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 1. Connect your wallet (e.g. MetaMask).
-2. If your wallet is on another network, click **"Switch to Botchain Testnet"**.
+2. If your wallet is on another network, click **"Switch to Botchain Mainnet"**.
 3. Click **"Mark as Cleaned"** on any task to record a cleanliness completion.
 4. Confirm the transaction in your wallet and observe the on-chain confirmation and live counter updates.
 
@@ -149,8 +151,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 1. Push your repository to GitHub, GitLab, or Bitbucket.
 2. Import the project into [Vercel](https://vercel.com).
 3. Under **Environment Variables**, configure:
-   - `NEXT_PUBLIC_BOTCHAIN_RPC_URL` = `https://rpc.bohr.life`
-   - `NEXT_PUBLIC_CONTRACT_ADDRESS` = `<your_deployed_contract_address>`
+   - `NEXT_PUBLIC_BOTCHAIN_RPC_URL` = `https://rpc.botchain.ai`
+   - `NEXT_PUBLIC_CONTRACT_ADDRESS` = `0x3ECA8573925E2d5d6DF0458EDC09c29d7f6f3D55`
    - `NEXT_PUBLIC_PROJECT_ID` = `<your_reown_project_id>` *(optional)*
 4. Click **Deploy**.
 
@@ -159,5 +161,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 10. Viewing on the Block Explorer
 
 You can inspect the deployed contract and all transactions on the Botchain block explorer:
-- Contract View: `https://scan.bohr.life/address/<YOUR_CONTRACT_ADDRESS>`
-- Transaction View: `https://scan.bohr.life/tx/<TX_HASH>`
+- Contract View: [https://scan.botchain.ai/address/0x3ECA8573925E2d5d6DF0458EDC09c29d7f6f3D55](https://scan.botchain.ai/address/0x3ECA8573925E2d5d6DF0458EDC09c29d7f6f3D55)
+- BOT Chain Website: [https://botchain.ai](https://botchain.ai)
+- BOT Chain Explorer: [https://scan.botchain.ai](https://scan.botchain.ai)

@@ -1,5 +1,5 @@
 async function main() {
-  const res = await fetch("https://scan.bohr.life/_next/static/Gi2j_mAxcfS4QHqWzlPrf/_buildManifest.js");
+  const res = await fetch("https://scan.botchain.ai/_next/static/manifest.js");
   const text = await res.text();
   const routes = [];
   const regex = /"(\/[^"]+)":/g;
